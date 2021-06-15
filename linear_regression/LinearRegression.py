@@ -25,7 +25,7 @@ def gradientDescent(X, y, theta, alpha, iters):
 
     return theta, cost
 
-if __name__ == '__main__':
+def singleXDemo():
     data = pd.read_csv('./data/ex1data1.txt', names=['Population', 'Profit'])  # 读取数据并赋予列名
     data.plot(kind='scatter', x='Population', y='Profit', figsize=(12, 8))
     plt.show()
@@ -38,12 +38,12 @@ if __name__ == '__main__':
     y = np.matrix(y.values)
     theta = np.matrix(np.array([0, 0]))
     cost1 = computeCost(X, y, theta)
-    print('cost1',cost1)
+    print('cost1', cost1)
     alpha = 0.01
     iters = 1000
     g, cost = gradientDescent(X, y, theta, alpha, iters)
     cost2 = computeCost(X, y, g)
-    print('cost2',cost2)
+    print('cost2', cost2)
 
     x = np.linspace(data.Population.min(), data.Population.max(), 100)
     f = g[0, 0] + (g[0, 1] * x)
@@ -63,5 +63,54 @@ if __name__ == '__main__':
     ax.set_ylabel('Cost')
     ax.set_title('Error vs. Training Epoch')
     plt.show()
+
+    finalTheta = normalEqn(X, y)
+    print(finalTheta)
+    cost3 = computeCost(X, y, finalTheta.T)
+    print('cost3', cost3)
+
+def mutiXDemo():
+    fData = pd.read_csv('./data/ex1data2.txt', names=['Population','Room', 'Profit'])  # 读取数据并赋予列名
+    # print(data.head())
+    print(fData.mean())
+    print('---------')
+    print(fData.std())
+
+    data = (fData - fData.mean())/fData.std()
+    data.insert(0, 'Ones', 1)
+    print(data.head())
+
+    cols = data.shape[1]
+    X = data.iloc[:, 0:cols - 1]  # X是所有行，去掉最后一列
+    y = data.iloc[:, cols - 1:cols]  # X是所有行，最后一列
+    X = np.matrix(X.values)
+    y = np.matrix(y.values)
+    theta = np.matrix(np.array([0, 0 ,0]))
+    cost1 = computeCost(X, y, theta)
+    print('cost1', cost1)
+    alpha = 0.01
+    iters = 1000
+    g, cost = gradientDescent(X, y, theta, alpha, iters)
+    cost2 = computeCost(X, y, g)
+    print('cost2', cost2)
+
+
+    fig, ax = plt.subplots(figsize=(12, 8))
+    ax.plot(np.arange(iters), cost, 'r')
+    ax.set_xlabel('Iterations')
+    ax.set_ylabel('Cost')
+    ax.set_title('Error vs. Training Epoch')
+    plt.show()
+
+
+
+def normalEqn(X,y):
+    theta = np.linalg.inv(X.T@X)@X.T@y
+    return theta
+
+if __name__ == '__main__':
+    singleXDemo()
+    # mutiXDemo()
+
 
 
