@@ -19,7 +19,7 @@ def createDateset():
         [1, 0, 1]]
     return dataSet
 
-
+# ln(正常件占率/违约件占率)
 def calcWOE(dataset, col, targe):
     subdata = df(dataset.groupby(col)[col].count())
     suby = df(dataset.groupby(col)[targe].sum())
@@ -32,7 +32,7 @@ def calcWOE(dataset, col, targe):
     data["WOE"] = data.apply(lambda x: log(x.bad / x.good), axis=1)
     return data.loc[:, ["bad", "good", "WOE"]]
 
-
+# SUM[(正常件占率-违约件占率)*WOE]
 def calcIV(dataset):
     dataset["IV"] = dataset.apply(lambda x: (x.bad - x.good) * x.WOE, axis=1)
     IV = sum(dataset["IV"])
