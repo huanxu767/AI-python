@@ -58,9 +58,13 @@ def rateCorr(df):
 
 if __name__ == '__main__':
 
+
+
     sql = '''
         select a.`业务模式` product, `month`,count(1) num
-        from hebao_order_fact a group by a.`业务模式`, `month`
+        from hebao_order_fact a 
+        where a.`归属省份` = '江苏省'
+        group by a.`业务模式`, `month` 
         '''
     columns = ['product','month','num']
     df = getData(sql,columns)
@@ -73,6 +77,3 @@ if __name__ == '__main__':
 
     # 占比相关性
     # print(_5GDf['num'].sum())
-
-
-    _
