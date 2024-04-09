@@ -91,3 +91,4 @@ if __name__ == '__main__':
     plt.ylim(0, 130)
     plt.title('Decision Boundary')
     plt.show()
+#%%
