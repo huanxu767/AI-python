@@ -27,8 +27,7 @@ def pearsonCorrelDemo():
     # corr = B1.corr(A1, method='pearson')
     # print(corr)
     # dataframe计算#
-    df = pd.DataFrame({'a':[1, 3, 6, 9, 0, 3],'b':[3, 5, 1, 4, 11, 3]})
-    print(df)
+    df = pd.DataFrame({'a':[1, 3, 6, 9, 0, 3],'b':[3, 5, 1, np.nan, 11, 3],'c':[32, 54, 1, 'nan', 11, 3]})
     corr = df.corr(method='pearson')
     print(corr)
 
@@ -60,20 +59,20 @@ if __name__ == '__main__':
 
 
 
-    sql = '''
-        select a.`业务模式` product, `month`,count(1) num
-        from hebao_order_fact a 
-        where a.`归属省份` = '江苏省'
-        group by a.`业务模式`, `month` 
-        '''
-    columns = ['product','month','num']
-    df = getData(sql,columns)
-    df['rate'] = df.groupby('month')['num'].transform(lambda x: x/ x.sum())
-    orderCorr(df)
-    rateCorr(df)
+    # sql = '''
+    #     select a.`业务模式` product, `month`,count(1) num
+    #     from hebao_order_fact a
+    #     where a.`归属省份` = '江苏省'
+    #     group by a.`业务模式`, `month`
+    #     '''
+    # columns = ['product','month','num']
+    # df = getData(sql,columns)
+    # df['rate'] = df.groupby('month')['num'].transform(lambda x: x/ x.sum())
+    # orderCorr(df)
+    # rateCorr(df)
     # df_mask = df[df['product'] == '5G消费券']
     # print(df_mask)
 
-
+    pearsonCorrelDemo()
     # 占比相关性
     # print(_5GDf['num'].sum())

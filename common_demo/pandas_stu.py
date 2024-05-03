@@ -12,7 +12,7 @@ def basic():
                        'assists': [5, 7, 13, 12]})
 
     print(df)
-
+    df.groupby('target').size()
 
 if __name__ == '__main__':
     basic()
